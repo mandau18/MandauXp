@@ -27,7 +27,7 @@ fix;
 while [ ! -f $LOGO ]; do sleep 0.01; done
 mv $lib/{libCrashSight.so,$RANDOM}
 mv $lib/{libUE4.so,2}
-sleep 3
+sleep 30
 mv $lib/{2,libUE4.so}
 sleep 7
 chmod 600 /data/data/$PKG/files/ano_tmp
