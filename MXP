@@ -108,7 +108,6 @@ iptables -A OUTPUT -p tcp -j DROP
 iptables -A FORWARD -p tcp -j DROP
 echo "done..."
 mv $lib/{libUE4.so,1}
-logs;
 fix;
 }
 
