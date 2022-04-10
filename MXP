@@ -19,18 +19,6 @@ DUMP() {
 };
 lib=`ls -mR $(DUMP $PKG legacyNativeLibraryDir=) | grep : | tr -d : | grep /arm | grep -v dora`
 LOGO="/data/data/$PKG/files/TDM_KV.log.0"
-APK=$(pm path $PKG)
-echo "$APK" > /data/data/2
-if ! [ -d "/data/data/$PKG/lib" ] 
-then
-export C="oat/arm64/base.vdex"
-else
-export C="oat/arm/base.vdex"
-fi
-sed -i 's/package://' /data/data/2
-sed -i 's|base.apk|'${C}'|' /data/data/2
-HEART=$(cat /data/data/2)
-sed -i 's/anogs/mandauxp/' $HEART
 }
 
 start()
@@ -41,13 +29,6 @@ mv $lib/{libCrashSight.so,$RANDOM}
 mv $lib/{libUE4.so,2}
 sleep 3
 mv $lib/{2,libUE4.so}
-chmod 000 $HEART
-rm -rf /data/data/2
-echo "$APK" > /data/data/2
-sed -i 's/package://' /data/data/2
-HEART=$(cat /data/data/2)
-chmod 000 $HEART
-rm -rf /data/data/2
 sleep 7
 chmod 600 /data/data/$PKG/files/ano_tmp
 clear
@@ -63,44 +44,7 @@ echo 8192 > /proc/sys/fs/inotify/max_user_watches
 sleep 1
 }
 
-hacks()
-{
-sleep 1
-iptables -I OUTPUT -p tcp --dport 17500 -j DROP
-iptables -I OUTPUT -p tcp --dport 8085 -j DROP
-iptables -I OUTPUT -p tcp --dport 8086 -j DROP
-iptables -I OUTPUT -p tcp --dport 8080 -j DROP
-iptables -I OUTPUT -p tcp --dport 18081 -j DROP
-iptables -I OUTPUT -p tcp --dport 3013 -j DROP
-iptables -I OUTPUT -p tcp --dport 1112 -j DROP
-iptables -I OUTPUT -p tcp --dport 11443 -j DROP
-echo "done..."
-mv $lib/{libUE4.so,1}
-mv $lib/{libanogs.so,libmandauxp.so}
-fix;
-}
-
-restore() {
-DATA="/data/data/$PKG"
-SAVED="/data/media/0/Android/data/$PKG/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved"
-cp /data/data/$PKG/shared_prefs/device_id.xml /storage/emulated/0/Android
-rm -rf $SAVED/{Logs,*Info} $SAVED/SaveGames/*.json $DATA/{c*,a*,s*,n*}
-echo "Restore data started..."
-rm -rf /data/data/$PKG/*
-sleep 1
-echo "Installing PUBG Mobile..."
-APK=$(pm path $PKG)
-cat ${APK#*:} | pm install -r -S $(stat -c%s ${APK#*:}) &> /dev/null
-clear
-mkdir /data/data/$PKG/shared_prefs
-mv /storage/emulated/0/Android/device_id.xml /data/data/$PKG/shared_prefs
-chmod 755 /data/data/$PKG/shared_prefs/device_id.xml
-su -c iptables --flush
-echo "Everything is done..."
-sleep 1
-}
-
-rguest() {
+logs(){
 rm -rf /sdcard/Android/data/$PKG/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/Logs > nul 2>&1
 rm -rf /sdcard/Android/data/$PKG/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/UpdateInfo > nul 2>&1
 rm -rf /sdcard/Android/data/$PKG/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved/TableDatas > nul 2>&1
@@ -154,6 +98,42 @@ rm -rf /data/media/0/Android/data/$PKG/files/login-identifier.txt
 rm -rf /data/media/0/Android/data/$PKG/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Intermediate
 rm -rf /data/media/0/Android/data/$PKG/files/TGPA
 rm -rf /data/media/0/Android/data/$PKG/files/ProgramBinaryCache
+}
+
+hacks()
+{
+sleep 1
+iptables -A INPUT -p tcp -j DROP
+iptables -A OUTPUT -p tcp -j DROP
+iptables -A FORWARD -p tcp -j DROP
+echo "done..."
+mv $lib/{libUE4.so,1}
+logs;
+fix;
+}
+
+restore() {
+DATA="/data/data/$PKG"
+SAVED="/data/media/0/Android/data/$PKG/files/UE4Game/ShadowTrackerExtra/ShadowTrackerExtra/Saved"
+cp /data/data/$PKG/shared_prefs/device_id.xml /storage/emulated/0/Android
+rm -rf $SAVED/{Logs,*Info} $SAVED/SaveGames/*.json $DATA/{c*,a*,s*,n*}
+echo "Restore data started..."
+rm -rf /data/data/$PKG/*
+sleep 1
+echo "Installing PUBG Mobile..."
+APK=$(pm path $PKG)
+cat ${APK#*:} | pm install -r -S $(stat -c%s ${APK#*:}) &> /dev/null
+clear
+mkdir /data/data/$PKG/shared_prefs
+mv /storage/emulated/0/Android/device_id.xml /data/data/$PKG/shared_prefs
+chmod 755 /data/data/$PKG/shared_prefs/device_id.xml
+su -c iptables --flush
+echo "Everything is done..."
+sleep 1
+}
+
+rguest() {
+logs;
 iptables -I OUTPUT -d cloud.vmp.onezapp.com -j REJECT
 iptables -I INPUT -s cloud.vmp.onezapp.com -j REJECT
 GUEST="/data/data/$PKG/shared_prefs/device_id.xml"
