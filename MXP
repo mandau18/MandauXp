@@ -14,6 +14,8 @@ then
 clear ; echo "PUBG Mobile not found!" ; exit
 exit
 fi
+rm -rf /data/data/$PKG/files/ano_tmp
+touch /data/data/$PKG/files/ano_tmp
 DUMP() {
   pm dump $1 | grep $2 | tr ' ' '\n' | grep $1 | sed s/$2// | tr -d '\n';
 };
