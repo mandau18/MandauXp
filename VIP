@@ -567,7 +567,7 @@ mainmenu;
 fi
 }
 clear
-echo -e "VIP Version.."
+echo -e "Thanks for use VIP Version.."
 echo -e "Please wait.."
 sleep 1
 echo -e "Loading..."
