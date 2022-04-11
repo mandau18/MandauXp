@@ -563,6 +563,7 @@ mainmenu;
 fi
 }
 clear
+echo -e "V1.."
 echo -e "Please wait.."
 sleep 1
 echo -e "Loading..."
