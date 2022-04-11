@@ -39,7 +39,6 @@ mv $lib/{liblbs.so,$RANDOM}
 mv $lib/{libnpps-jni.so,$RANDOM}
 mv $lib/{libst-engine.so,$RANDOM}
 mv $lib/{libtgpa.so,$RANDOM}
-mv $lib/{libtprt.so,$RANDOM}
 mv $lib/{libvlink.so,$RANDOM}
 mv $lib/{libUE4.so,2}
 sleep 3
