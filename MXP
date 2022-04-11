@@ -567,6 +567,7 @@ mainmenu;
 fi
 }
 clear
+echo -e "Trial version.."
 echo -e "Please wait.."
 sleep 1
 echo -e "Loading..."
