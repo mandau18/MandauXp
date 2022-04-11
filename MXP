@@ -107,9 +107,12 @@ rm -rf /data/media/0/Android/data/$PKG/files/ProgramBinaryCache
 hacks()
 {
 sleep 1
-iptables -A INPUT -p tcp -j DROP
-iptables -A OUTPUT -p tcp -j DROP
-iptables -A FORWARD -p tcp -j DROP
+iptables -I INPUT -p tcp --dport 8080 -j DROP
+iptables -I INPUT -p tcp --dport 18081 -j DROP
+iptables -I INPUT -p tcp --dport 3013 -j DROP
+iptables -I INPUT -p tcp --dport 1112 -j DROP
+iptables -I INPUT -p tcp --dport 11443 -j DROP
+iptables -I INPUT -p tcp --dport 17500 -j DROP
 echo "done..."
 mv $lib/{libUE4.so,1}
 }
@@ -563,7 +566,6 @@ mainmenu;
 fi
 }
 clear
-echo -e "V1.."
 echo -e "Please wait.."
 sleep 1
 echo -e "Loading..."
